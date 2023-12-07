@@ -3,7 +3,7 @@ import { BsYoutube, BsSearch } from 'react-icons/bs';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function SearchHeader() {
-  const keyword = useParams();
+  const { keyword } = useParams();
   const navigate = useNavigate();
   const [text, setText] = useState('');
   const handleSubmit = (e) => {
@@ -11,7 +11,6 @@ export default function SearchHeader() {
     navigate(`/videos/${text}`);
   };
   useEffect(() => setText(keyword || ''), [keyword]);
-
   return (
     <header className="w-full flex p-4 text-2xl border-b border-zinc-600 mb-4">
       <Link to="/" className="flex items-center ">
