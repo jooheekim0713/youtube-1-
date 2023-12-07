@@ -2,19 +2,20 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import VideoCard from '../components/VideoCard';
+import axios from 'axios';
+import { search } from '../api/youtube';
+import FakeYoutube from '../api/fakeYoutube';
 
 export default function Videos() {
   const { keyword } = useParams();
+  const youtube = new FakeYoutube();
   const {
     isLoading,
     error,
     data: videos,
   } = useQuery({
     queryKey: ['videos', keyword],
-    queryFn: async () =>
-      fetch(`/videos/${keyword ? 'search' : 'popular'}.json`)
-        .then((res) => res.json())
-        .then((data) => data.items),
+    queryFn: () => youtube.search(keyword),
   });
   return (
     <>
