@@ -2,13 +2,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import VideoCard from '../components/VideoCard';
-import axios from 'axios';
-import { search } from '../api/youtube';
 import FakeYoutube from '../api/fakeYoutube';
+import Youtube from '../api/youtube';
+import { useYoutubeApi } from '../components/context/YoutubeApiContext';
 
 export default function Videos() {
   const { keyword } = useParams();
-  const youtube = new FakeYoutube();
+  const { youtube } = useYoutubeApi();
   const {
     isLoading,
     error,
@@ -19,7 +19,6 @@ export default function Videos() {
   });
   return (
     <>
-      <div>videos {keyword ? `${keyword}` : 'hot trend'}</div>
       {isLoading && <p>Loading</p>}
       {error && <p>something is wrong</p>}
       {videos && (
